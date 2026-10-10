@@ -18,6 +18,9 @@ The project is divided into:
 
 ### Backend Setup
 1. `cd backend`
+
+## Database Schema Diagram
+![Database Schema](docs/schema-diagram.png)
 2. `npm install`
 3. Add your variables to `.env` (MONGO_URI, JWT_SECRET, Stripe & Cloudinary keys).
 4. Run `node seed.js` to seed demo users.
