@@ -18,9 +18,6 @@ The project is divided into:
 
 ### Backend Setup
 1. `cd backend`
-
-## Database Schema Diagram
-![Database Schema](docs/schema-diagram.png)
 2. `npm install`
 3. Add your variables to `.env` (MONGO_URI, JWT_SECRET, Stripe & Cloudinary keys).
 4. Run `node seed.js` to seed demo users.
@@ -32,50 +29,4 @@ The project is divided into:
 3. `npm run dev`
 
 ## Database Schema Diagram
-```mermaid
-erDiagram
-    USER ||--o{ PRODUCT : "Vendors create"
-    USER ||--o{ ORDER : "Buyers place"
-    USER ||--o{ REVIEW : "Buyers write"
-    PRODUCT ||--o{ ORDER_ITEM : "Included in"
-    ORDER ||--|{ ORDER_ITEM : "Contains"
-    PRODUCT ||--o{ REVIEW : "Has"
-
-    USER {
-        ObjectId _id
-        String name
-        String email
-        String password
-        String role
-        Object storeProfile
-    }
-    
-    PRODUCT {
-        ObjectId _id
-        ObjectId vendor
-        String title
-        String description
-        Number price
-        String image
-        Number stock
-    }
-    
-    ORDER {
-        ObjectId _id
-        ObjectId buyer
-        Array products
-        Number totalAmount
-        Object shippingAddress
-        String paymentMethod
-        String paymentStatus
-        String orderStatus
-    }
-    
-    REVIEW {
-        ObjectId _id
-        ObjectId product
-        ObjectId buyer
-        Number rating
-        String comment
-    }
-```
+![Database Schema](docs/schema-diagram.png)
