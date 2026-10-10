@@ -1,7 +1,7 @@
 # Artisan's Corner - E-commerce Platform for Handmade Goods
 
 ## Live Application
-Since this is an assessment, please deploy and test locally or via provided deployment link.
+Live link: https://artisans-corner-pneh.onrender.com (hosted on Render's free plan, so the first load can take about a minute). Payments use Stripe test mode: use card 4242 4242 4242 4242 with any future date and CVC.
 
 ## Demo Credentials
 - **Demo Vendor**:
