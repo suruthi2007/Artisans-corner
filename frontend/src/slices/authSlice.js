@@ -27,6 +27,24 @@ export const logout = createAsyncThunk('auth/logout', async () => {
     localStorage.removeItem('user');
 });
 
+export const becomeSeller = createAsyncThunk('auth/becomeSeller', async (storeData, thunkAPI) => {
+    try {
+        const state = thunkAPI.getState();
+        const config = {
+            headers: {
+                Authorization: `Bearer ${state.auth.user.token}`
+            }
+        };
+        const response = await axios.post('/api/auth/become-seller', storeData, config);
+        // The API returns { message, user }, we need to keep the token which is in state.auth.user.token
+        const updatedUser = { ...response.data.user, token: state.auth.user.token };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+        return updatedUser;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+});
+
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
@@ -66,6 +84,16 @@ const authSlice = createSlice({
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null;
+            })
+            .addCase(becomeSeller.pending, (state) => { state.isLoading = true; })
+            .addCase(becomeSeller.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.user = action.payload;
+            })
+            .addCase(becomeSeller.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isError = true;
+                state.message = action.payload;
             });
     }
 });

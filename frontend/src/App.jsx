@@ -11,6 +11,7 @@ import Wishlist from './pages/Wishlist';
 import Checkout from './pages/Checkout';
 import OrderHistory from './pages/OrderHistory';
 import StoreProfile from './pages/StoreProfile';
+import BecomeSeller from './pages/BecomeSeller';
 
 function App() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
@@ -44,6 +45,7 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/order-history" element={<OrderHistory />} />
             <Route path="/store/:vendorId" element={<StoreProfile />} />
+            <Route path="/become-seller" element={<BecomeSeller />} />
           </Routes>
         </main>
       </div>

@@ -61,8 +61,10 @@ const Navbar = ({ toggleTheme, theme }) => {
                         
                         {user ? (
                             <div className="flex items-center gap-4">
-                                {user.role === 'Vendor' && (
+                                {user.role === 'Vendor' ? (
                                     <Link to="/dashboard/seller" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Vendor Dashboard</Link>
+                                ) : (
+                                    <Link to="/become-seller" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">Become a Seller</Link>
                                 )}
                                 <Link to="/order-history" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition-colors">My Orders</Link>
                                 <div className="h-8 w-px bg-gray-300 mx-2"></div>
