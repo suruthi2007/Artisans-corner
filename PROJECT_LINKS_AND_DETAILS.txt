@@ -1,0 +1,38 @@
+===============================================================
+ARTISAN'S CORNER - MINOR PROJECT SUBMISSION DETAILS
+===============================================================
+
+1. LIVE APPLICATION LINK:
+   https://artisans-corner-pneh.onrender.com
+
+2. GITHUB SOURCE CODE REPOSITORY:
+   https://github.com/suruthi2007/Artisans-corner
+
+3. DEMO EVALUATION CREDENTIALS:
+   ------------------------------------------------------------
+   * Vendor / Artisan Account:
+     Email: luna@demo.com
+     Password: password123
+
+   * Customer / Buyer Account:
+     Email: alice@demo.com
+     Password: password123
+
+4. STRIPE TEST PAYMENT DETAILS:
+   Card Number: 4242 4242 4242 4242
+   Expiry: Any valid future MM/YY (e.g., 12/28)
+   CVC: 123 (or any 3 digits)
+
+5. TECH STACK:
+   * Frontend: React 19, Redux Toolkit, Tailwind CSS, Vite
+   * Backend: Node.js, Express 5, REST API, JWT Authentication
+   * Database: MongoDB Atlas (Mongoose ODM)
+   * Payment Gateway: Stripe Checkout
+   * Media Storage: Cloudinary
+   * Hosting: Render Cloud
+
+6. INCLUDED DOCUMENTS IN THIS SUBMISSION:
+   * Artisans_Corner_Project_Presentation.pptx (Project PPT)
+   * Artisans_Corner_Project_Report.pdf (Full Project Documentation)
+   * Source Code (Backend & Frontend)
+===============================================================
