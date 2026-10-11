@@ -8,10 +8,12 @@ const Login = () => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
-        name: ''
+        name: '',
+        role: 'Buyer',
+        storeName: ''
     });
 
-    const { email, password, name } = formData;
+    const { email, password, name, role, storeName } = formData;
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -27,7 +29,11 @@ const Login = () => {
         }
 
         if (user) {
-            navigate('/');
+            if (user.role === 'Vendor') {
+                navigate('/dashboard/seller');
+            } else {
+                navigate('/');
+            }
         }
     }, [user, isError, message, navigate, dispatch]);
 
@@ -45,34 +51,80 @@ const Login = () => {
             const userData = { email, password };
             dispatch(login(userData));
         } else {
-            const userData = { name, email, password };
+            const userData = { name, email, password, role, storeName };
             dispatch(register(userData));
         }
     };
 
     return (
-        <div className="flex justify-center items-center py-12">
-            <div className="glass p-10 rounded-3xl w-full max-w-md">
+        <div className="flex justify-center items-center py-12 px-4">
+            <div className="glass p-8 sm:p-10 rounded-3xl w-full max-w-md shadow-2xl">
                 <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">{isLogin ? 'Welcome Back' : 'Join the Community'}</h1>
-                    <p className="text-gray-500">
-                        {isLogin ? 'Sign in to access your account' : 'Create an account to start shopping'}
+                    <h1 className="text-3xl font-bold text-gray-900 mb-2 font-serif">{isLogin ? 'Welcome Back' : 'Join the Community'}</h1>
+                    <p className="text-gray-500 text-sm">
+                        {isLogin ? 'Sign in to access your account' : 'Choose how you want to join Artisan\'s Corner'}
                     </p>
                 </div>
 
-                <form onSubmit={onSubmit} className="space-y-6">
+                <form onSubmit={onSubmit} className="space-y-5">
                     {!isLogin && (
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                            <input 
-                                type="text" 
-                                name="name"
-                                value={name}
-                                onChange={onChange}
-                                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all bg-white/50 backdrop-blur-sm"
-                                placeholder="Jane Doe"
-                            />
-                        </div>
+                        <>
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">I want to:</label>
+                                <div className="grid grid-cols-2 gap-3 mb-4">
+                                    <button
+                                        type="button"
+                                        onClick={() => setFormData({ ...formData, role: 'Buyer' })}
+                                        className={`py-2.5 px-3 rounded-xl border text-sm font-medium transition-all ${
+                                            role === 'Buyer'
+                                                ? 'border-primary-600 bg-primary-50 text-primary-700 shadow-sm'
+                                                : 'border-gray-200 text-gray-600 hover:border-gray-300'
+                                        }`}
+                                    >
+                                        🛍️ Shop Goods
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setFormData({ ...formData, role: 'Vendor' })}
+                                        className={`py-2.5 px-3 rounded-xl border text-sm font-medium transition-all ${
+                                            role === 'Vendor'
+                                                ? 'border-primary-600 bg-primary-50 text-primary-700 shadow-sm font-bold'
+                                                : 'border-gray-200 text-gray-600 hover:border-gray-300'
+                                        }`}
+                                    >
+                                        🎨 Sell My Craft
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <input 
+                                    type="text" 
+                                    name="name"
+                                    value={name}
+                                    onChange={onChange}
+                                    required
+                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all bg-white/50 backdrop-blur-sm"
+                                    placeholder="Jane Doe"
+                                />
+                            </div>
+
+                            {role === 'Vendor' && (
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700 mb-1">Store / Studio Name</label>
+                                    <input 
+                                        type="text" 
+                                        name="storeName"
+                                        value={storeName}
+                                        onChange={onChange}
+                                        required
+                                        className="w-full px-4 py-3 rounded-xl border border-primary-300 focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all bg-primary-50/30 backdrop-blur-sm"
+                                        placeholder="e.g. Luna Pottery Studio"
+                                    />
+                                </div>
+                            )}
+                        </>
                     )}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>

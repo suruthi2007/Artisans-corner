@@ -71,9 +71,14 @@ const Navbar = ({ toggleTheme, theme }) => {
                                 <button onClick={onLogout} className="text-sm font-medium text-gray-600 hover:text-red-500 transition-colors">Logout</button>
                             </div>
                         ) : (
-                            <Link to="/login" className="bg-dark-900 hover:bg-primary-600 text-white text-sm font-medium px-6 py-2.5 rounded-full transition-all duration-300 shadow-md">
-                                Sign In
-                            </Link>
+                            <div className="flex items-center gap-4">
+                                <Link to="/become-seller" className="text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-primary-600 transition-colors">
+                                    Become a Seller
+                                </Link>
+                                <Link to="/login" className="bg-dark-900 hover:bg-primary-600 text-white text-sm font-medium px-6 py-2.5 rounded-full transition-all duration-300 shadow-md">
+                                    Sign In
+                                </Link>
+                            </div>
                         )}
                     </div>
                 </div>
