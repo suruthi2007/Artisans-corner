@@ -42,7 +42,7 @@ exports.getVendorAnalytics = async (req, res) => {
     try {
         // Find all orders that contain products from this vendor
         const vendorProducts = await Product.find({ vendor: req.user._id }).select('_id');
-        const vendorProductIds = vendorProducts.map(p => p._id);
+        const vendorProductIds = vendorProducts.map(p => p._id.toString());
 
         const orders = await Order.find({
             'products.product': { $in: vendorProductIds },
@@ -53,14 +53,19 @@ exports.getVendorAnalytics = async (req, res) => {
         let totalSales = 0;
 
         orders.forEach(order => {
-            order.products.forEach(item => {
-                if (vendorProductIds.includes(item.product._id)) {
-                    totalSales += item.quantity;
-                    // Platform fee is 5%, vendor payout is 95%
-                    const itemTotal = item.quantity * item.price;
-                    totalEarnings += itemTotal * 0.95;
-                }
-            });
+            if (Array.isArray(order.products)) {
+                order.products.forEach(item => {
+                    if (item && item.product) {
+                        const prodId = item.product._id ? item.product._id.toString() : item.product.toString();
+                        if (vendorProductIds.includes(prodId)) {
+                            totalSales += item.quantity || 0;
+                            // Platform fee is 5%, vendor payout is 95%
+                            const itemTotal = (item.quantity || 0) * (item.price || 0);
+                            totalEarnings += itemTotal * 0.95;
+                        }
+                    }
+                });
+            }
         });
 
         res.json({ totalSales, totalEarnings });

@@ -27,7 +27,7 @@ const VendorDashboard = () => {
     const [loadingProducts, setLoadingProducts] = useState(true);
 
     useEffect(() => {
-        if (!user || user.role.toLowerCase() !== 'vendor') {
+        if (!user || user.role?.toLowerCase() !== 'vendor') {
             navigate('/login');
         } else {
             fetchVendorData();
@@ -41,8 +41,8 @@ const VendorDashboard = () => {
                 axios.get('/api/vendors/products', config),
                 axios.get('/api/vendors/analytics', config)
             ]);
-            setProducts(productsRes.data);
-            setAnalytics(analyticsRes.data);
+            setProducts(Array.isArray(productsRes.data) ? productsRes.data : []);
+            setAnalytics(analyticsRes.data && typeof analyticsRes.data === 'object' ? analyticsRes.data : { totalSales: 0, totalEarnings: 0 });
         } catch (error) {
             toast.error('Failed to load dashboard data');
         } finally {
@@ -155,7 +155,7 @@ const VendorDashboard = () => {
                 <div className="glass p-6 rounded-2xl flex items-center justify-between">
                     <div>
                         <p className="text-gray-500 font-medium">Total Items Sold</p>
-                        <h3 className="text-3xl font-bold text-gray-900">{analytics.totalSales}</h3>
+                        <h3 className="text-3xl font-bold text-gray-900">{analytics?.totalSales ?? 0}</h3>
                     </div>
                     <div className="p-4 bg-primary-100 rounded-full text-primary-600">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
@@ -166,7 +166,7 @@ const VendorDashboard = () => {
                 <div className="glass p-6 rounded-2xl flex items-center justify-between">
                     <div>
                         <p className="text-gray-500 font-medium">Total Earnings</p>
-                        <h3 className="text-3xl font-bold text-green-600">₹{analytics.totalEarnings.toFixed(2)}</h3>
+                        <h3 className="text-3xl font-bold text-green-600">₹{(Number(analytics?.totalEarnings) || 0).toFixed(2)}</h3>
                     </div>
                     <div className="p-4 bg-green-100 rounded-full text-green-600">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
@@ -310,7 +310,7 @@ const VendorDashboard = () => {
                         <div className="flex justify-center p-12">
                             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
                         </div>
-                    ) : products.length === 0 ? (
+                    ) : (!Array.isArray(products) || products.length === 0) ? (
                         <div className="glass p-12 text-center rounded-2xl">
                             <p className="text-gray-500">You haven't added any products yet.</p>
                         </div>
